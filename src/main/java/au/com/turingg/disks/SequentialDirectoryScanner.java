@@ -20,7 +20,7 @@ public class SequentialDirectoryScanner implements DirectoryScanner {
         if (!Files.isDirectory(directory)) {
             throw new IllegalArgumentException(
                     String.format(
-                            "%s is not a directory",
+                            "[%s] is not a directory",
                             directory.toAbsolutePath().toString()
                     )
             );
