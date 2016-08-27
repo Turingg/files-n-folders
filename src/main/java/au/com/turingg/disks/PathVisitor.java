@@ -80,13 +80,19 @@ public class PathVisitor implements FileVisitor<Path> {
 
     private Optional<String> detectMimeType(Path path) {
         if (!Files.isRegularFile(path)) {
-            return Optional.empty();
+            return Optional.of("inode/irregular-file");
+        }
+
+        if (Files.isDirectory(path)) {
+            return Optional.of("inode/directory");
         }
 
         try {
             final String mimeType = tika.detect(path.toFile());
             return Optional.of(mimeType);
         } catch (IOException ioe) {
+            errorHandler.accept(path, ioe);
+
             return Optional.empty();
         }
     }
