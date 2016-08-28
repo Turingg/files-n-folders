@@ -17,18 +17,13 @@ public class ExtendedPathTest {
                 "path/to/fileName,json",
                 "json",
                 "application/json",
+                FileType.REGULAR_FILE,
                 1000L
         );
 
         Assert.assertThat(
                 extendedPath.toString(),
-                equalTo("ExtendedPath" +
-                        "[name=fileName.json," +
-                        "absolutePath=path/to/fileName," +
-                        "json," +
-                        "extension=json," +
-                        "mimeType=application/json," +
-                        "size=1000]")
+                equalTo("ExtendedPath[name=fileName.json,absolutePath=path/to/fileName,json,extension=json,mimeType=application/json,size=1000,type=REGULAR_FILE]")
         );
     }
 

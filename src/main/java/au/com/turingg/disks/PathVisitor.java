@@ -1,9 +1,7 @@
 package au.com.turingg.disks;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.tika.Tika;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
@@ -31,26 +29,20 @@ public class PathVisitor implements FileVisitor<Path> {
 
     @Override
     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+        final ExtendedPath ep = new ExtendedPath(dir);
+
+        consumer.accept(ep);
+
         return FileVisitResult.CONTINUE;
     }
 
     @Override
     public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
-        final File file = path.toFile();
-
-        final String fileName = file.getName();
-        final String absolutePath = file.getAbsolutePath();
-        final String extension = FilenameUtils.getExtension(absolutePath);
-        final String mimeType = detectMimeType(path).orElse("");
-
-        final long size = file.length();
+        final String mimeType = detectMimeType(path).orElse(null);
 
         final ExtendedPath ep = new ExtendedPath(
-                fileName,
-                absolutePath,
-                extension,
-                mimeType,
-                size
+                path,
+                mimeType
         );
 
         consumer.accept(ep);
