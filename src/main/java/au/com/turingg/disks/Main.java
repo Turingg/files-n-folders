@@ -1,5 +1,7 @@
 package au.com.turingg.disks;
 
+import org.apache.tika.Tika;
+
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Set;
@@ -19,7 +21,8 @@ public class Main {
         Set<String> mimeTypes = new TreeSet<>();
 
         DirectoryScanner directoryScanner = new SequentialDirectoryScanner(
-                new PathVisitor(
+                new StatelessPathVisitor(
+                        new Tika(),
                         extendedPath -> {
                             if (extendedPath.getMimeType() != null)
                                 mimeTypes.add(extendedPath.getMimeType());

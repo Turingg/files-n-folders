@@ -15,15 +15,15 @@ import java.util.function.Consumer;
 /**
  * @author Behrang Saeedzadeh
  */
-public class PathVisitor implements FileVisitor<Path> {
+public class StatelessPathVisitor implements FileVisitor<Path> {
 
     private final Tika tika;
-    private final Consumer<ExtendedPath> consumer;
+    private final Consumer<ExtendedPath> pathHandler;
     private final BiConsumer<Path, IOException> errorHandler;
 
-    public PathVisitor(final Consumer<ExtendedPath> consumer, final BiConsumer<Path, IOException> errorHandler) {
-        this.tika = new Tika();
-        this.consumer = consumer;
+    public StatelessPathVisitor(final Tika tika, final Consumer<ExtendedPath> pathHandler, final BiConsumer<Path, IOException> errorHandler) {
+        this.tika = tika;
+        this.pathHandler = pathHandler;
         this.errorHandler = errorHandler;
     }
 
@@ -31,7 +31,7 @@ public class PathVisitor implements FileVisitor<Path> {
     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
         final ExtendedPath ep = new ExtendedPath(dir);
 
-        consumer.accept(ep);
+        pathHandler.accept(ep);
 
         return FileVisitResult.CONTINUE;
     }
@@ -45,7 +45,7 @@ public class PathVisitor implements FileVisitor<Path> {
                 mimeType
         );
 
-        consumer.accept(ep);
+        pathHandler.accept(ep);
 
         return FileVisitResult.CONTINUE;
     }

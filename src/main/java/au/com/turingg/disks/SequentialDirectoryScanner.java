@@ -9,9 +9,9 @@ import java.nio.file.Path;
  */
 public class SequentialDirectoryScanner implements DirectoryScanner {
 
-    private final PathVisitor pathVisitor;
+    private final StatelessPathVisitor pathVisitor;
 
-    public SequentialDirectoryScanner(PathVisitor pathVisitor) {
+    public SequentialDirectoryScanner(StatelessPathVisitor pathVisitor) {
         this.pathVisitor = pathVisitor;
     }
 
