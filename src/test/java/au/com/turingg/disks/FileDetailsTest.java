@@ -8,11 +8,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 /**
  * @author Behrang Saeedzadeh
  */
-public class ExtendedPathTest {
+public class FileDetailsTest {
 
     @Test
     public void toStringShouldPrintDetails() {
-        ExtendedPath extendedPath = new ExtendedPath(
+        FileDetails fileDetails = new FileDetails(
                 "fileName.json",
                 "path/to/fileName,json",
                 "json",
@@ -22,8 +22,8 @@ public class ExtendedPathTest {
         );
 
         Assert.assertThat(
-                extendedPath.toString(),
-                equalTo("ExtendedPath[name=fileName.json,absolutePath=path/to/fileName,json,extension=json,mimeType=application/json,size=1000,type=REGULAR_FILE]")
+                fileDetails.toString(),
+                equalTo("FileDetails[name=fileName.json,absolutePath=path/to/fileName,json,extension=json,mimeType=application/json,size=1000,type=REGULAR_FILE]")
         );
     }
 

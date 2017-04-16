@@ -1,11 +1,13 @@
 package au.com.turingg.disks;
 
-import org.apache.tika.Tika;
+import com.tinkerpop.blueprints.impls.orient.OrientGraphNoTx;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Set;
-import java.util.TreeSet;
+
+import static java.util.Arrays.asList;
 
 /**
  * @author Behrang Saeedzadeh
@@ -13,29 +15,22 @@ import java.util.TreeSet;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        if (args.length != 1) {
-            System.out.println("Please provide a path");
-            System.exit(1);
-        }
+        final OrientGraphNoTx graph = new OrientGraphNoTx("plocal:databases/poc2", "admin", "admin");
 
-        Set<String> mimeTypes = new TreeSet<>();
+        asList("DIR", "FILE").forEach(type -> {
+            if (graph.getVertexType(type) == null) {
+                graph.createVertexType(type);
+            }
+        });
 
-        DirectoryScanner directoryScanner = new SequentialDirectoryScanner(
-                new StatelessPathVisitor(
-                        new Tika(),
-                        extendedPath -> {
-                            if (extendedPath.getMimeType() != null)
-                                mimeTypes.add(extendedPath.getMimeType());
-                        },
-                        (path, e) ->
-                                System.err.println(String.format("Error: %s for %s", e, path))
-                )
+        graph.getVertices().forEach(graph::removeVertex);
+        graph.getEdges().forEach(graph::removeEdge);
 
-        );
+        Path rootDir = Paths.get("/home");
 
-        directoryScanner.start(Paths.get(args[0]));
+        final OrientDbFileVisitor visitor = new OrientDbFileVisitor(graph);
 
-        mimeTypes.forEach(System.out::println);
+        Files.walkFileTree(rootDir, visitor);
     }
 
 }

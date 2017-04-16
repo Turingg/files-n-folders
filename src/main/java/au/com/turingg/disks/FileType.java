@@ -6,7 +6,8 @@ package au.com.turingg.disks;
 public enum FileType {
 
     DIRECTORY,
-    OTHER,
-    REGULAR_FILE
+    REGULAR_FILE,
+    SYMLINK,
+    OTHER
 
 }
