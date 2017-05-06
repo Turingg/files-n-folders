@@ -1,4 +1,4 @@
-package au.com.turingg.disks;
+package au.com.turingg.files;
 
 import com.tinkerpop.blueprints.impls.orient.OrientGraphNoTx;
 

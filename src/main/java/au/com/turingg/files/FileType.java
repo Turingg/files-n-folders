@@ -1,4 +1,4 @@
-package au.com.turingg.disks;
+package au.com.turingg.files;
 
 /**
  * @author Behrang Saeedzadeh
