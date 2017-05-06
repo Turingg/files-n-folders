@@ -1,5 +1,4 @@
 ## Turingg Files
 
-A mini-library for scanning all files in a directory recursively and producing extended information
-for all the files encountered, such as mime type, fileDetails size, extension, and absolute path. 
-Also handles errors gracefully.
+A mini-library for scanning all files in a directory recursively and storing the details of, and relationships between,
+those files in a graph database (OrientDB).
