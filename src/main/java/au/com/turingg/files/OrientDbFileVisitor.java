@@ -35,6 +35,10 @@ public class OrientDbFileVisitor implements FileVisitor<Path> {
 
         populateVertex(vertex, fileDetails);
 
+        if (!dirStack.isEmpty()) {
+            graph.addEdge("class:hasChild", dirStack.peek(), vertex, null);
+        }
+
         dirStack.push(vertex);
 
         return CONTINUE;
